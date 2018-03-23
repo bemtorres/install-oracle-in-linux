@@ -1,0 +1,97 @@
+#1 limits
+
+vi /etc/security/limits.conf 
+
+oracle soft nproc 2047
+oracle hard nproc 16384
+oracle soft nofile 4096
+oracle hard nofile 65536
+oracle soft stack 10240
+
+#2 Kernel
+
+vi /etc/sysctl.conf
+
+kernel.shmall = 2097152
+kernel.shmmax = 982431744
+kernel.shmmni = 4096
+kernel.sem = 250 32000 100 128
+fs.file-max = 6815744
+fs.aio-max-nr = 1048576
+net.ipv4.ip_local_port_range = 9000 65500
+net.core.rmem_default = 262144
+net.core.rmem_max = 4194304
+net.core.wmem_default = 262144
+net.core.wmem_max = 1048576
+
+
+#3 efectos de cambios 
+
+/sbin/sysctl -p
+
+#4 libreria
+
+yum install gcc gcc-c++ compat-libstdc++-33 elfutils-libelf-devel libaio-devel libstdc++-devel unixODBC unixODBC-devel
+
+
+
+#5 Creación Usuarios
+
+#Grupos Básicos
+groupadd dba
+groupadd oinstall
+
+
+#Grupos para ASM
+groupadd asmadmin
+groupadd asmoper
+groupadd asmdba
+
+
+#Creamos los Usuarios oracle y grid 
+
+useradd -g dba  oracle
+useradd -g oinstall -G asmadmin,asmdba,dba,asmoper grid
+
+#Modificamos el usuario Oracle
+
+ 
+
+usermod -g oinstall -G asmdba,dba oracle
+ 
+
+#Asignamos claves a los usuario oracle y grid.
+
+ 
+
+passwd grid
+passwd oracle
+
+#Creamos los directorios necesarios.
+
+ 
+
+#No debiera ser necesario, ya que Oracle crea automáticamente los directorios
+
+mkdir -p /u01/app/grid
+mkdir -p /u01/app/11.2.0/grid
+mkdir -p /u01/app/oracle/product/11.2.0/dbhome_1
+ 
+
+#Asignamos dueños
+
+chown -R grid:oinstall /u01/app
+chown -R oracle:oinstall /u01/app/oracle
+ 
+
+ 
+
+#Cambiamos los permisos
+
+ 
+
+chmod 775 /u01/app
+
+
+
+
