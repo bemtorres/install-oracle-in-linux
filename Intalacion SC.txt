@@ -1,0 +1,41 @@
+groupadd dba
+useradd -g dba -d /oracle oracle
+
+cd /root/Oracle11g (Agrego el iso y los guardo en la carpte root(benjamin) ) (me dirijo a esa carpeta cambio el nombre a bash_profile por "mv .bash_profile")
+
+ls -lat
+mv *.zip /oracle
+cp .bash_profile /oracle
+cd /oracle
+ls -lat
+chown oracle:dba *zip
+chown oracle:dba .bash_profile
+cd
+su - oracle
+ls -lat
+exit
+passwd oracle -> password is oracle
+su - oracle
+ls
+
+unzip p(tabular)1(tabular)
+unzip p(tabular)2(tabular)
+
+(reiniciar para que .bash sirva)
+
+echo $ORACLE_SID
+echo $ORACLE_BASE
+ls
+cd datebase/
+ls
+salir de la sesion root
+y despues entrar como usuario oracle
+/oracle/database/./runInstaller
+
+
+
+ver pagina de harrys para la instalacion del oracle 11g
+
+al estar en la pag web pedira usuario y contraseña usuario es system
+y la contraseña es la que se asignan en la instalacion del 11g
+exit
